@@ -116,7 +116,6 @@
     "through": "^2.3.8",
     "tree-kill": "^1.0.0",
     "tslint": "^3.8.1",
-    "walk-sync": "^0.2.6",
-    "webpack-closure-compiler": "^2.0.2"
+    "walk-sync": "^0.2.6"
   }
 }
