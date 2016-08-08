@@ -1,7 +1,9 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/0.13/config/configuration-file.html
+/* globals module require */
+/* eslint-disable camelcase */
 
-module.exports = function (config) {
+module.exports = function(config) {
   config.set({
     basePath: '..',
     frameworks: ['jasmine', 'angular-cli'],

@@ -49,12 +49,12 @@ export function getWebpackCommonConfig(projectRoot: string, sourceDir: string) {
           ],
           exclude: [/\.(spec|e2e)\.ts$/]
         },
-        { test: /\.json$/, loader: 'json-loader'},
-        { test: /\.css$/,  loaders: ['raw-loader', 'postcss-loader'] },
+        { test: /\.json$/, loader: 'json-loader' },
+        { test: /\.css$/, loaders: ['raw-loader', 'postcss-loader'] },
         { test: /\.styl$/, loaders: ['raw-loader', 'postcss-loader', 'stylus-loader'] },
         { test: /\.less$/, loaders: ['raw-loader', 'postcss-loader', 'less-loader'] },
         { test: /\.scss$|\.sass$/, loaders: ['raw-loader', 'postcss-loader', 'sass-loader'] },
-        { test: /\.(jpg|png)$/, loader: 'url-loader?limit=128000'},
+        { test: /\.(jpg|png)$/, loader: 'url-loader?limit=128000' },
         { test: /\.html$/, loader: 'raw-loader' }
       ]
     },
@@ -75,9 +75,9 @@ export function getWebpackCommonConfig(projectRoot: string, sourceDir: string) {
       }),
       new CopyWebpackPlugin([{
         context: path.resolve(projectRoot, './public'),
-        from: '**/*', 
+        from: '**/*',
         to: path.resolve(projectRoot, './dist')
-      }])
+      }]),
     ],
     node: {
       global: 'window',

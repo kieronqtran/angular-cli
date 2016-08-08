@@ -91,6 +91,7 @@
     "typescript": "^2.0.0",
     "url-loader": "^0.5.7",
     "webpack": "2.1.0-beta.18",
+    "webpack-closure-compiler": "^2.0.2",
     "webpack-dev-server": "2.1.0-beta.0",
     "webpack-md5-hash": "0.0.5",
     "webpack-merge": "^0.14.0"
@@ -115,6 +116,7 @@
     "through": "^2.3.8",
     "tree-kill": "^1.0.0",
     "tslint": "^3.8.1",
-    "walk-sync": "^0.2.6"
+    "walk-sync": "^0.2.6",
+    "webpack-closure-compiler": "^2.0.2"
   }
 }
