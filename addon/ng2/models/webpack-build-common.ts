@@ -20,7 +20,7 @@ export function getWebpackCommonConfig(projectRoot: string, environment: string,
       root: appRoot
     },
     context: path.resolve(__dirname, './'),
-    entry: { 
+    entry: {
       main: [appMain, styles]
     },
     output: {
@@ -53,16 +53,6 @@ export function getWebpackCommonConfig(projectRoot: string, environment: string,
           ],
           exclude: [/\.(spec|e2e)\.ts$/]
         },
-<<<<<<< HEAD
-        { test: /\.json$/, loader: 'json-loader' },
-        { test: /\.css$/, loaders: ['raw-loader', 'postcss-loader'] },
-        { test: /\.styl$/, loaders: ['raw-loader', 'postcss-loader', 'stylus-loader'] },
-        { test: /\.less$/, loaders: ['raw-loader', 'postcss-loader', 'less-loader'] },
-        { test: /\.scss$|\.sass$/, loaders: ['raw-loader', 'postcss-loader', 'sass-loader'] },
-        { test: /\.(jpg|png)$/, loader: 'url-loader?limit=128000' },
-        { test: /\.html$/, loader: 'raw-loader' }
-=======
-
         // in main, load css as raw text
         { exclude: styles, test: /\.css$/, loaders: ['raw-loader', 'postcss-loader'] },
         { exclude: styles, test: /\.styl$/, loaders: ['raw-loader', 'postcss-loader', 'stylus-loader'] },
@@ -82,7 +72,6 @@ export function getWebpackCommonConfig(projectRoot: string, environment: string,
         { test: /\.(woff|ttf|svg)$/, loader: 'url?limit=10000' },
         { test: /\.woff2$/, loader: 'url?limit=10000&mimetype=font/woff2' },
         { test: /\.eot$/, loader: 'file' }
->>>>>>> 2b7f8c4d19030b9741fb6a06fc4e3e108b7369c4
       ]
     },
     plugins: [
