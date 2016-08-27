@@ -2,13 +2,14 @@ import * as Command from 'ember-cli/lib/models/command';
 import * as WebpackBuild from '../tasks/build-webpack';
 import * as WebpackBuildWatch from '../tasks/build-webpack-watch';
 
-interface BuildOptions {
+export interface BuildOptions {
   target?: string;
   environment?: string;
   outputPath?: string;
   watch?: boolean;
   watcher?: string;
   supressSizes: boolean;
+  baseHref?: string;
 }
 
 module.exports = Command.extend({
@@ -17,27 +18,33 @@ module.exports = Command.extend({
   aliases: ['b'],
 
   availableOptions: [
-    { name: 'target',         type: String,  default: 'development', aliases: ['t', { 'dev': 'development' }, { 'prod': 'production' }] },
+    {
+      name: 'target',
+      type: String,
+      default: 'development',
+      aliases: ['t', { 'dev': 'development' }, { 'prod': 'production' }]
+    },
     { name: 'environment',    type: String,  default: '', aliases: ['e'] },
     { name: 'output-path',    type: 'Path',  default: 'dist/',       aliases: ['o'] },
     { name: 'watch',          type: Boolean, default: false,         aliases: ['w'] },
     { name: 'watcher',        type: String },
-    { name: 'suppress-sizes', type: Boolean, default: false }
+    { name: 'suppress-sizes', type: Boolean, default: false },
+    { name: 'base-href',      type: String,  default: null, aliases: ['bh'] },
   ],
 
   run: function (commandOptions: BuildOptions) {
-    if (commandOptions.environment === ''){
+    if (commandOptions.environment === '') {
       if (commandOptions.target === 'development') {
         commandOptions.environment = 'dev';
       }
       if (commandOptions.target === 'production') {
         commandOptions.environment = 'prod';
-      } 
+      }
     }
 
-    var project = this.project;
-    var ui = this.ui;
-    var buildTask = commandOptions.watch ?
+    const project = this.project;
+    const ui = this.ui;
+    const buildTask = commandOptions.watch ?
       new WebpackBuildWatch({
         cliProject: project,
         ui: ui,

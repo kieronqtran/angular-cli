@@ -13,13 +13,6 @@ module.exports = function(config) {
       require('karma-remap-istanbul'),
       require('angular-cli/plugins/karma')
     ],
-    customLaunchers: {
-      // chrome setup for travis CI using chromium
-      Chrome_travis_ci: {
-        base: 'Chrome',
-        flags: ['--no-sandbox']
-      }
-    },
     files: [
       { pattern: './<%= sourceDir %>/test.ts', watched: false }
     ],

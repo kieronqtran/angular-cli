@@ -5,18 +5,24 @@ import * as webpack from 'webpack';
 import * as ProgressPlugin from 'webpack/lib/ProgressPlugin';
 import { NgCliWebpackConfig } from '../models/webpack-config';
 import { webpackOutputOptions } from '../models/';
-import { ServeTaskOptions } from '../commands/serve';
+import { BuildOptions } from '../commands/build';
 
 let lastHash: any = null;
 
 module.exports = Task.extend({
-  run: function(runTaskOptions: ServeTaskOptions) {
+  run: function(runTaskOptions: BuildOptions) {
 
     const project = this.cliProject;
 
     rimraf.sync(path.resolve(project.root, runTaskOptions.outputPath));
 
-    const config = new NgCliWebpackConfig(project, runTaskOptions.target, runTaskOptions.environment, runTaskOptions.outputPath).config;
+    const config = new NgCliWebpackConfig(
+      project,
+      runTaskOptions.target,
+      runTaskOptions.environment,
+      runTaskOptions.outputPath,
+      runTaskOptions.baseHref
+    ).config;
     const webpackCompiler = webpack(config);
 
     webpackCompiler.apply(new ProgressPlugin({
@@ -28,15 +34,15 @@ module.exports = Task.extend({
         if (err) {
           lastHash = null;
           console.error(err.stack || err);
-          if(err.details) console.error(err.details);
+          if (err.details) { console.error(err.details); }
             reject(err.details);
         }
 
-        if(stats.hash !== lastHash) {
+        if (stats.hash !== lastHash) {
           lastHash = stats.hash;
-          process.stdout.write(stats.toString(webpackOutputOptions) + "\n");
+          process.stdout.write(stats.toString(webpackOutputOptions) + '\n');
         }
-      })
-    })
+      });
+    });
   }
 });
