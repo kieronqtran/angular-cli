@@ -2,9 +2,9 @@
 
 [![Join the chat at https://gitter.im/angular/angular-cli](https://badges.gitter.im/angular/angular-cli.svg)](https://gitter.im/angular/angular-cli?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Build Status][travis-badge]][travis-badge-url]
-[![Dependency Status][david-badge]][david-badge-url]
-[![devDependency Status][david-dev-badge]][david-dev-badge-url]
+[![Build Status](https://travis-ci.org/kieronqtran/angular-cli.svg?branch=master)](https://travis-ci.org/kieronqtran/angular-cli)
+[![Dependencies Status](https://david-dm.org/kieronqtran/angular-cli/status.svg)](https://david-dm.org/kieronqtran/angular-cli)
+[![devDependencies Status](https://david-dm.org/kieronqtran/angular-cli/dev-status.svg)](https://david-dm.org/kieronqtran/angular-cli?type=dev)
 [![npm][npm-badge]][npm-badge-url]
 
 Prototype of a CLI for Angular 2 applications based on the [ember-cli](http://www.ember-cli.com/) project.
