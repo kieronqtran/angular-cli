@@ -2,6 +2,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const atl = require('awesome-typescript-loader');
 
 const getWebpackTestConfig = function (projectRoot, environment, appConfig) {
 
@@ -11,7 +12,12 @@ const getWebpackTestConfig = function (projectRoot, environment, appConfig) {
     devtool: 'inline-source-map',
     context: path.resolve(__dirname, './'),
     resolve: {
-      extensions: ['.ts', '.js']
+      extensions: ['.ts', '.js'],
+      plugins: [
+        new atl.TsConfigPathsPlugin({
+          tsconfig: path.resolve(appRoot, appConfig.tsconfig)
+        })
+      ]
     },
     entry: {
       test: path.resolve(appRoot, appConfig.test)
@@ -96,7 +102,11 @@ const getWebpackTestConfig = function (projectRoot, environment, appConfig) {
             resourcePath: `./${appConfig.root}`
           }
         }
-      })
+      }),
+      new webpack.ContextReplacementPlugin(
+        /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+        appRoot
+      )
     ],
     node: {
       fs: 'empty',
