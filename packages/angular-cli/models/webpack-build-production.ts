@@ -31,7 +31,6 @@ export const getWebpackProdConfigPartial = function(projectRoot: string, appConf
                : [];
   const cssLoaders = ['css-loader?sourcemap&minimize', 'postcss-loader'];
   return {
-    devtool: 'source-map',
     output: {
       path: path.resolve(projectRoot, appConfig.outDir),
       filename: '[name].[chunkhash].bundle.js',
@@ -80,17 +79,6 @@ export const getWebpackProdConfigPartial = function(projectRoot: string, appConf
       }),
       new webpack.LoaderOptionsPlugin({
         options: {
-          htmlLoader: {
-            minimize: true,
-            removeAttributeQuotes: false,
-            caseSensitive: true,
-            customAttrSurround: [
-              [/#/, /(?:)/],
-              [/\*/, /(?:)/],
-              [/\[?\(?/, /(?:)/]
-            ],
-            customAttrAssign: [/\)?\]?=/]
-          },
           postcss: [
             require('postcss-discard-comments')
           ]
