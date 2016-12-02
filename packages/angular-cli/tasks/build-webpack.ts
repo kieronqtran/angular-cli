@@ -1,10 +1,10 @@
 import * as rimraf from 'rimraf';
 import * as path from 'path';
-const Task = require('ember-cli/lib/models/task');
+const Task = require('../ember-cli/lib/models/task');
 import * as webpack from 'webpack';
 import { BuildOptions } from '../commands/build';
 import { NgCliWebpackConfig } from '../models/webpack-config';
-import { webpackOutputOptions } from '../models/';
+import { getWebpackStatsConfig } from '../models/';
 import { CliConfig } from '../models/config';
 
 // Configure build and output;
@@ -23,37 +23,31 @@ export default <any>Task.extend({
       runTaskOptions.environment,
       outputDir,
       runTaskOptions.baseHref,
-      runTaskOptions.aot
+      runTaskOptions.aot,
+      runTaskOptions.sourcemap,
+      runTaskOptions.vendorChunk,
+      runTaskOptions.verbose,
+      runTaskOptions.progress
     ).config;
-
-    // fail on build error
-    config.bail = true;
 
     const webpackCompiler: any = webpack(config);
 
-    const ProgressPlugin  = require('webpack/lib/ProgressPlugin');
-
-    webpackCompiler.apply(new ProgressPlugin({
-      profile: true
-    }));
+    const statsConfig = getWebpackStatsConfig(runTaskOptions.verbose);
 
     return new Promise((resolve, reject) => {
       webpackCompiler.run((err: any, stats: any) => {
+        if (err) { return reject(err); }
+
         // Don't keep cache
         // TODO: Make conditional if using --watch
         webpackCompiler.purgeInputFileSystem();
 
-        if (err) {
-          lastHash = null;
-          console.error(err.details || err);
-          reject(err.details || err);
-        }
-
         if (stats.hash !== lastHash) {
           lastHash = stats.hash;
-          process.stdout.write(stats.toString(webpackOutputOptions) + '\n');
+          process.stdout.write(stats.toString(statsConfig) + '\n');
         }
-        resolve();
+
+        return stats.hasErrors() ? reject() : resolve();
       });
     });
   }

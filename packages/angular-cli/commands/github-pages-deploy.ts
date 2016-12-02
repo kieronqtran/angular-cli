@@ -1,4 +1,4 @@
-const Command = require('ember-cli/lib/models/command');
+const Command = require('../ember-cli/lib/models/command');
 const SilentError = require('silent-error');
 import denodeify = require('denodeify');
 
@@ -97,6 +97,7 @@ const githubPagesDeployCommand = Command.extend({
     const projectName = this.project.pkg.name;
 
     const outDir = CliConfig.fromProject().config.apps[0].outDir;
+    const indexFilename = CliConfig.fromProject().config.apps[0].index;
 
     let ghPagesBranch = 'gh-pages';
     let destinationBranch = options.userPage ? 'master' : ghPagesBranch;
@@ -216,7 +217,7 @@ const githubPagesDeployCommand = Command.extend({
     }
 
     function createNotFoundPage() {
-      const indexHtml = path.join(root, 'index.html');
+      const indexHtml = path.join(root, indexFilename);
       const notFoundPage = path.join(root, '404.html');
       return fsCopy(indexHtml, notFoundPage);
     }
@@ -240,7 +241,7 @@ const githubPagesDeployCommand = Command.extend({
         .then((stdout) => {
           let match = stdout.match(/origin\s+(?:https:\/\/|git@)github\.com(?:\:|\/)([^\/]+)/m);
           let userName = match[1].toLowerCase();
-          let url = `https://${userName}.github.io/${options.userPage ? '' : (projectName + '/')}`;
+          let url = `https://${userName}.github.io/${options.userPage ? '' : (baseHref + '/')}`;
           ui.writeLine(chalk.green(`Deployed! Visit ${url}`));
           ui.writeLine('Github pages might take a few minutes to show the deployed site.');
         });
