@@ -12,7 +12,6 @@ const util = require('util');
 const EOL = require('os').EOL;
 const SilentError = require('silent-error');
 
-
 describe('Acceptance: ng new', function () {
   beforeEach(function () {
     return tmp.setup('./tmp').then(function () {
@@ -116,7 +115,7 @@ describe('Acceptance: ng new', function () {
     return ng(['new', 'foo', '--skip-npm', '--skip-git'])
       .then(function () {
         return ng(['new', 'foo', '--skip-npm', '--skip-git']).then(() => {
-          throw new SilentError('Cannot run ng new, inside of ember-cli project should fail.');
+          throw new SilentError('Cannot run ng new, inside of angular-cli project should fail.');
         }, () => {
           expect(!existsSync('foo'));
         });
@@ -169,4 +168,13 @@ describe('Acceptance: ng new', function () {
         expect(existsSync(styleFile)).to.equal(false);
       });
   });
+
+  it('should skip spec files when passed --skip-tests', () => {
+    return ng(['new', 'foo', '--skip-npm', '--skip-git', '--skip-tests'])
+      .then(() => {
+        const specFile = path.join('src', 'app', 'app.component.spec.ts');
+        expect(existsSync(specFile)).to.equal(false);
+      });
+  });
+
 });

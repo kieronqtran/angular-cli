@@ -19,6 +19,8 @@ const NewCommand = Command.extend({
     { name: 'link-cli', type: Boolean, default: false, aliases: ['lc'] },
     { name: 'skip-npm', type: Boolean, default: false, aliases: ['sn'] },
     { name: 'skip-git', type: Boolean, default: false, aliases: ['sg'] },
+    { name: 'skip-tests', type: Boolean, default: false, aliases: ['st'] },
+    { name: 'skip-commit', type: Boolean, default: false, aliases: ['sc'] },
     { name: 'directory', type: String, aliases: ['dir'] },
     { name: 'source-dir', type: String, default: 'src', aliases: ['sd'] },
     { name: 'style', type: String, default: 'css' },
@@ -72,11 +74,10 @@ const NewCommand = Command.extend({
     }
 
     const createAndStepIntoDirectory =
-      new this.tasks.CreateAndStepIntoDirectory({ ui: this.ui, analytics: this.analytics });
+      new this.tasks.CreateAndStepIntoDirectory({ ui: this.ui });
 
     const initCommand = new InitCommand({
       ui: this.ui,
-      analytics: this.analytics,
       tasks: this.tasks,
       project: Project.nullProject(this.ui, this.cli)
     });
