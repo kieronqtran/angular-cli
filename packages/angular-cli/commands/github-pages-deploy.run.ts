@@ -6,13 +6,14 @@ import * as chalk from 'chalk';
 import * as fs from 'fs';
 import * as fse from 'fs-extra';
 import * as path from 'path';
-import WebpackBuild from '../tasks/build-webpack';
+import Build from '../tasks/build';
 import CreateGithubRepo from '../tasks/create-github-repo';
 import { CliConfig } from '../models/config';
 import { GithubPagesDeployOptions } from './github-pages-deploy';
 
 const fsReadDir = <any>denodeify(fs.readdir);
 const fsCopy = <any>denodeify(fse.copy);
+const fsWriteFile = <any>denodeify(fse.writeFile);
 
 export default function githubPagesDeployRun(options: GithubPagesDeployOptions, rawArgs: string[]) {
   const ui = this.ui;
@@ -43,7 +44,7 @@ export default function githubPagesDeployRun(options: GithubPagesDeployOptions, 
   // declared here so that tests can stub exec
   const execPromise = <(cmd: string, options?: any) => Promise<string>>denodeify(exec);
 
-  const buildTask = new WebpackBuild({
+  const buildTask = new Build({
     ui: this.ui,
     cliProject: this.project,
     target: options.target,
@@ -53,17 +54,23 @@ export default function githubPagesDeployRun(options: GithubPagesDeployOptions, 
 
   /**
    * BaseHref tag setting logic:
-   * First, use --base-href flag value if provided.
+   * First, no value if --custom-domain is provided.
+   * Second, use --base-href flag value if provided.
    * Else if --user-page is true, then keep baseHref default as declared in index.html.
    * Otherwise auto-replace with `/${projectName}/`.
    */
-  const baseHref = options.baseHref || (options.userPage ? null : `/${projectName}/`);
+  let baseHref: String = null;
+  if (!options.customDomain) {
+    baseHref = options.baseHref || (options.userPage ? null : `/${projectName}/`);
+  }
 
   const buildOptions = {
     target: options.target,
     environment: options.environment,
     outputPath: outDir,
     baseHref: baseHref,
+    aot: options.aot,
+    vendorChunk: options.vendorChunk,
   };
 
   const createGithubRepoTask = new CreateGithubRepo({
@@ -85,6 +92,7 @@ export default function githubPagesDeployRun(options: GithubPagesDeployOptions, 
     .then(cleanGhPagesBranch)
     .then(copyFiles)
     .then(createNotFoundPage)
+    .then(createCustomDomainFile)
     .then(addAndCommit)
     .then(returnStartingBranch)
     .then(pushToGitRepo)
@@ -176,6 +184,15 @@ export default function githubPagesDeployRun(options: GithubPagesDeployOptions, 
     return fsCopy(indexHtml, notFoundPage);
   }
 
+  function createCustomDomainFile() {
+    if (!options.customDomain) {
+      return;
+    }
+
+    const cnameFile = path.join(root, 'CNAME');
+    return fsWriteFile(cnameFile, options.customDomain);
+  }
+
   function addAndCommit() {
     return execPromise('git add .', execOptions)
       .then(() => execPromise(`git commit -m "${options.message}"`))
@@ -203,7 +220,14 @@ export default function githubPagesDeployRun(options: GithubPagesDeployOptions, 
   function printProjectUrl() {
     return getUsernameFromGitOrigin()
         .then((userName) => {
-          let url = `https://${userName}.github.io/${options.userPage ? '' : (baseHref + '/')}`;
+          let url = '';
+
+          if (options.customDomain) {
+            url = `http://${options.customDomain}/`;
+          } else {
+            url = `https://${userName}.github.io/${options.userPage ? '' : (baseHref + '/')}`;
+          }
+
           ui.writeLine(chalk.green(`Deployed! Visit ${url}`));
           ui.writeLine('Github pages might take a few minutes to show the deployed site.');
         });

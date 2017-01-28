@@ -1,5 +1,36 @@
+<a name="1.0.0-beta.26"></a>
+# [1.0.0-beta.26](https://github.com/angular/angular-cli/compare/v1.0.0-beta.25...v1.0.0-beta.26) (2017-01-19)
+
+
+### Bug Fixes
+
+* **@ngtools/json-schema:** serialize object properties better. ([#4103](https://github.com/angular/angular-cli/issues/4103)) ([48d1e44](https://github.com/angular/angular-cli/commit/48d1e44)), closes [#4044](https://github.com/angular/angular-cli/issues/4044)
+* **@ngtools/webpack:** dont error on non-identifier properties. ([#4078](https://github.com/angular/angular-cli/issues/4078)) ([e91552f](https://github.com/angular/angular-cli/commit/e91552f))
+* **@ngtools/webpack:** honor tsconfig#angularCompilerOptions.entryModule before trying to resolveEntryModuleFromMain() ([#4013](https://github.com/angular/angular-cli/issues/4013)) ([c9ac263](https://github.com/angular/angular-cli/commit/c9ac263))
+* **build:** override publicPath for ExtractTextPlugin and add extract-css test ([#4036](https://github.com/angular/angular-cli/issues/4036)) ([c1f1e0c](https://github.com/angular/angular-cli/commit/c1f1e0c))
+* **generate:** correct component path when module is generated in subfolder, and parent folder is not a module too ([#3916](https://github.com/angular/angular-cli/issues/3916)) ([f70feae](https://github.com/angular/angular-cli/commit/f70feae)), closes [#3255](https://github.com/angular/angular-cli/issues/3255)
+* **generate:** normalize pwd before using it ([#4065](https://github.com/angular/angular-cli/issues/4065)) ([09e1eb3](https://github.com/angular/angular-cli/commit/09e1eb3)), closes [#1639](https://github.com/angular/angular-cli/issues/1639)
+* **get/set:** Add support for global configuration. ([#4074](https://github.com/angular/angular-cli/issues/4074)) ([088ebf0](https://github.com/angular/angular-cli/commit/088ebf0))
+* **help:** remove ember references in console output ([#4026](https://github.com/angular/angular-cli/issues/4026)) ([394aa05](https://github.com/angular/angular-cli/commit/394aa05))
+* **help:** remove match of *.run.ts files ([#3982](https://github.com/angular/angular-cli/issues/3982)) ([7b47753](https://github.com/angular/angular-cli/commit/7b47753))
+* **new:** improve error message when project name does not match regex ([bf23b13](https://github.com/angular/angular-cli/commit/bf23b13)), closes [#3816](https://github.com/angular/angular-cli/issues/3816) [#3902](https://github.com/angular/angular-cli/issues/3902)
+* **test:** remove webpack size limit warning ([#3974](https://github.com/angular/angular-cli/issues/3974)) ([5df4799](https://github.com/angular/angular-cli/commit/5df4799))
+
+
+### Features
+
+* **@ngtools/json-schema:** add support for enums. ([c034a44](https://github.com/angular/angular-cli/commit/c034a44)), closes [#4082](https://github.com/angular/angular-cli/issues/4082)
+* **build:** add style paths ([#4003](https://github.com/angular/angular-cli/issues/4003)) ([e5ef996](https://github.com/angular/angular-cli/commit/e5ef996)), closes [#1791](https://github.com/angular/angular-cli/issues/1791)
+* **build:** use NamedModulesPlugin with HMR ([c5b2244](https://github.com/angular/angular-cli/commit/c5b2244)), closes [#3679](https://github.com/angular/angular-cli/issues/3679) [#4037](https://github.com/angular/angular-cli/issues/4037)
+* **deploy:** add custom-domain support for gh-pages deployment ([#1781](https://github.com/angular/angular-cli/issues/1781)) ([#3392](https://github.com/angular/angular-cli/issues/3392)) ([a54bc16](https://github.com/angular/angular-cli/commit/a54bc16))
+* **generate:** add option to auto-export declarations ([#3876](https://github.com/angular/angular-cli/issues/3876)) ([6d63bb4](https://github.com/angular/angular-cli/commit/6d63bb4)), closes [#3778](https://github.com/angular/angular-cli/issues/3778)
+* **generate:** create parent directories required for blueprints if they do not exist ([76380a6](https://github.com/angular/angular-cli/commit/76380a6)), closes [#3307](https://github.com/angular/angular-cli/issues/3307) [#3912](https://github.com/angular/angular-cli/issues/3912)
+* **gh-pages:deploy:** add aot and vendor-chunk options for gh-pages:deploy ([#4073](https://github.com/angular/angular-cli/issues/4073)) ([71445c3](https://github.com/angular/angular-cli/commit/71445c3))
+
+
+
 <a name="1.0.0-beta.25"></a>
-# [1.0.0-beta.25](https://github.com/angular/angular-cli/compare/v1.0.0-beta.23...v1.0.0-beta.25) (2017-01-12)
+# [1.0.0-beta.25](https://github.com/angular/angular-cli/compare/v1.0.0-beta.24...v1.0.0-beta.25) (2017-01-12)
 
 
 ### Bug Fixes
@@ -12,7 +43,7 @@
 * **build/serve:** correct check against angular v2.3.1 ([#3785](https://github.com/angular/angular-cli/issues/3785)) ([d0224a5](https://github.com/angular/angular-cli/commit/d0224a5)), closes [#3720](https://github.com/angular/angular-cli/issues/3720) [#3729](https://github.com/angular/angular-cli/issues/3729)
 * **config:** allow minimal config for build/serve ([#3835](https://github.com/angular/angular-cli/issues/3835)) ([f616158](https://github.com/angular/angular-cli/commit/f616158))
 * **lint:** remove tslint rule that requires type info ([#3818](https://github.com/angular/angular-cli/issues/3818)) ([1555c2b](https://github.com/angular/angular-cli/commit/1555c2b))
-* **lint:** use noUnusedParameters and noUnusedLocals instead of no-unused-variabl ([#3945](https://github.com/angular/angular-cli/issues/3945)) ([dd378fe](https://github.com/angular/angular-cli/commit/dd378fe))
+* **lint:** use noUnusedParameters and noUnusedLocals instead of no-unused-variable ([#3945](https://github.com/angular/angular-cli/issues/3945)) ([dd378fe](https://github.com/angular/angular-cli/commit/dd378fe))
 * **serve:** communicate that ng serve is not secure. ([#3646](https://github.com/angular/angular-cli/issues/3646)) ([766394d](https://github.com/angular/angular-cli/commit/766394d))
 * **serve:** fallback to config.app[0].index ([#3813](https://github.com/angular/angular-cli/issues/3813)) ([45e2985](https://github.com/angular/angular-cli/commit/45e2985)), closes [#3748](https://github.com/angular/angular-cli/issues/3748)
 * **test:** remove webpack size limit warning ([#3974](https://github.com/angular/angular-cli/issues/3974)) ([b25b97d](https://github.com/angular/angular-cli/commit/b25b97d))
